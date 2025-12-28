@@ -2,4 +2,4 @@
 .ipynb_checkpoints/
 __pycache__/
 *.pyc
-data/
+data/application_train.csv
