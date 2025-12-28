@@ -23,7 +23,8 @@ In consumer lending, defaults are **rare** and the cost of mistakes is **asymmet
 **Source**
 
 *   **Kaggle** → *Home Credit Default Risk*
-    Only **`application_train.csv`** is used.
+    Only **`application_train.csv`** is used (~158MB).
+
     Kaggle competition page: <https://www.kaggle.com/c/home-credit-default-risk>
 
 **Target**: `TARGET` (1 = default, 0 = non‑default)
