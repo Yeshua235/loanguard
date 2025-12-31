@@ -42,9 +42,13 @@ In consumer lending, defaults are **rare** and the cost of mistakes is **asymmet
     │  └─ application_train.csv
     ├─ notebooks/
     │  ├─ eda.ipynb
-    │  ├─ feature_engineering_modeling.ipynb
+    │  ├─ feature_engineering.ipynb
     │  └─ loanguard.ipynb
     ├─ reports/
+    │  ├─eda/
+    │  │  └─target_classes.dist.png
+    │  ├─feature_engineering/
+    │  │  └─
     │  ├─ pr_curves.png
     │  ├─ confusion_matrix.png
     │  └─ feature_importance.png
