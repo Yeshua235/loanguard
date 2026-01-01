@@ -36,26 +36,41 @@ In consumer lending, defaults are **rare** and the cost of mistakes is **asymmet
 ## Project Structure
 
     loanguard/
-    ├─ README.md
-    ├─ LICENSE
+    ├─ README.md ✅
+    ├─ LICENSE ✅
     ├─ data/
-    │  └─ application_train.csv
+    │  └─ application_train.csv ✅
+    ├─ utility/
+    │  └─ utils.py ✅
     ├─ notebooks/
-    │  ├─ eda.ipynb
-    │  ├─ feature_engineering.ipynb
+    │  ├─ eda.ipynb ✅
+    │  ├─ feature_engineering.ipynb ✅
+    │  ├─ model_selection.ipynb
     │  └─ loanguard.ipynb
     ├─ reports/
     │  ├─eda/
-    │  │  └─target_classes.dist.png
+    │  │  └─target_classes.dist.png ✅
     │  ├─feature_engineering/
+    │  │  ├─distance-preservation.png ✅
+    │  │  ├─Frobenius-vs-dimensionality.png ✅
+    │  │  ├─MSE-vs-dimensionality.png ✅
+    │  │  ├─pca-cumulative-explained-variance.png ✅
+    │  │  ├─R2-vs-dimensionality.png ✅
+    │  │  ├─reconstruction-error-r2.png ✅
+    │  │  └─Spectral-vs-dimensionality.png ✅
+    │  ├─model_selection/
+    │  │  ├─
+    │  │  ├─
     │  │  └─
     │  ├─ pr_curves.png
     │  ├─ confusion_matrix.png
     │  └─ feature_importance.png
     ├─ models/
+    │  ├─
     │  └─ loanguard.pkl
-    ├─ requirements.txt
-    └─ .gitignore
+    ├─ environment.yml ✅
+    ├─ requirements.txt ✅
+    └─ .gitignore ✅
 
 
 
