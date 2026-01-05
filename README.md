@@ -45,7 +45,7 @@ In consumer lending, defaults are **rare** and the cost of mistakes is **asymmet
     ├─ notebooks/
     │  ├─ eda.ipynb ✅
     │  ├─ feature_engineering.ipynb ✅
-    │  ├─ model_selection.ipynb
+    │  ├─ model_selection.ipynb ✅
     │  └─ loanguard.ipynb
     ├─ reports/
     │  ├─eda/
@@ -59,9 +59,15 @@ In consumer lending, defaults are **rare** and the cost of mistakes is **asymmet
     │  │  ├─reconstruction-error-r2.png ✅
     │  │  └─Spectral-vs-dimensionality.png ✅
     │  ├─model_selection/
-    │  │  ├─
-    │  │  ├─
-    │  │  └─
+    │  │  ├─learning_curves/
+    │  │  │  ├─dummy_classifier.png ✅
+    │  │  │  ├─hist_gradient_boosting_classifier.png ✅
+    │  │  │  ├─logistic_regression.png ✅
+    │  │  │  ├─mlp_classifier.png ✅
+    │  │  │  ├─random_forest.png ✅
+    │  │  │  └─stochastic_gradient_descent.png ✅
+    │  │  ├─cv-f1-scores.png ✅
+    │  │  └─cv-pr-auc-scores.png ✅
     │  ├─ pr_curves.png
     │  ├─ confusion_matrix.png
     │  └─ feature_importance.png

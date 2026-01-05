@@ -10,6 +10,69 @@ from scipy.stats import spearmanr
 from pathlib import Path
 from pandas.api.types import is_numeric_dtype
 
+from sklearn.model_selection import cross_validate, StratifiedKFold
+from sklearn.metrics import PrecisionRecallDisplay
+
+
+# Model Selection Utilities
+
+def evaluate_model(model, data: pd.DataFrame, target: pd.DataFrame | np.ndarray) -> dict[str, np.ndarray]:
+    """
+    Cross-validated metrics for a classifier (expects model to be an estimator or Pipeline).
+    Important: to avoid leakage, pass a Pipeline that includes preprocessing.
+    """
+    cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=37)
+    scores = cross_validate(
+        estimator=model,
+        X=data, y=target,
+        cv=cv, scoring={"f1": "f1", "pr_auc": "average_precision"},
+        n_jobs=-1, error_score="raise",
+        return_train_score=False,
+    )
+
+    return {
+        "f1-score": scores["test_f1"],
+        "pr_auc": scores["test_pr_auc"],
+    }
+
+model_selection_fig_dir = Path(__file__).resolve().parent.parent/"reports"/"model_selection"
+model_selection_fig_dir.mkdir(parents=True, exist_ok=True)
+
+def plot_pr_curve(model, data: pd.DataFrame, target: pd.DataFrame | np.ndarray, curve_label: str):
+    """
+    Fits `model` and returns a PrecisionRecallDisplay.
+    Uses response_method='auto' so it works for estimators with predict_proba OR decision_function.
+    """
+    fitted_model = model.fit(data, target)
+
+    return PrecisionRecallDisplay.from_estimator(
+        estimator=fitted_model,
+        X=data, y=target,
+        pos_label=1, response_method='auto',
+        name=curve_label, plot_chance_level=True,
+        chance_level_kw={'label':'Chance Level'}
+    )
+
+def cross_val_scores_plot(scores: list[pd.DataFrame], names: list[str], choice_column: str):
+    """
+    Build a boxplot comparing CV score distributions across models.
+    `scores` is a list of DataFrames (each with columns like 'f1-score', 'pr_auc').
+    Returns matplotlib Axes.
+    """
+    if len(scores) != len(names):
+        raise ValueError("scores and names must have the same length")
+
+    series_list = []
+    for df, name in zip(scores, names):
+        if choice_column not in df.columns:
+            raise KeyError(f"{choice_column=} not found in DataFrame columns: {list(df.columns)}")
+        series_list.append(df[choice_column].rename(name))
+
+    plot_frame = pd.concat(series_list, axis=1)
+    ax = plot_frame.boxplot(grid=True)
+    ax.set_ylabel(choice_column)
+    return ax
+
 
 # Feature Engineering Utilities
 
@@ -356,8 +419,8 @@ class DRMetrics:
             plt.show()
 
 
-
 # EDA Utilities
+
 def data_distribution_frame(data: pd.DataFrame) -> pd.DataFrame:
     '''
     function for inspecting the data distribution of the target classes
@@ -411,4 +474,3 @@ def columns_with_null(data: pd.DataFrame, option:str='') -> pd.DataFrame:
     else:
         null_col_frames = pd.concat((num_bad_frame, str_bad_frame), axis=0)
         return null_col_frames
-
