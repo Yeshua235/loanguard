@@ -63,11 +63,13 @@ In consumer lending, defaults are **rare** and the cost of mistakes is **asymmet
     │  │  │  ├─dummy_classifier.png ✅
     │  │  │  ├─hist_gradient_boosting_classifier.png ✅
     │  │  │  ├─logistic_regression.png ✅
-    │  │  │  ├─mlp_classifier.png ✅
     │  │  │  ├─random_forest.png ✅
     │  │  │  └─stochastic_gradient_descent.png ✅
-    │  │  ├─cv-f1-scores.png ✅
-    │  │  └─cv-pr-auc-scores.png ✅
+    │  │  ├─full-cv-f1-scores.png ✅
+    │  │  ├─full-cv-pr-auc.png ✅
+    │  │  ├─reduced-cv-f1-scores.png ✅
+    │  │  ├─reduced-cv-pr-auc.png ✅
+    │  │  └─selected_algorithm_pr_curve.png ✅
     │  ├─ pr_curves.png
     │  ├─ confusion_matrix.png
     │  └─ feature_importance.png
