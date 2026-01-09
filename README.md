@@ -90,10 +90,9 @@ In consumer lending, defaults are **rare** and the cost of mistakes is **asymmet
 
 ## Results
 
-Example baseline (placeholders — update with your run):
 - PR AUC: ---
 - Recall@Precision= --- : ---
-- Optimal threshold: ~ ---
+- Optimal threshold: ---
 - Expected cost per 1,000 applications: --- to ---
 
 See `reports/` for exact figures and plots.

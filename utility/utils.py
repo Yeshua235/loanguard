@@ -11,8 +11,20 @@ from pathlib import Path
 from pandas.api.types import is_numeric_dtype
 
 from sklearn.model_selection import cross_validate, StratifiedKFold
-from sklearn.metrics import PrecisionRecallDisplay
+from sklearn.metrics import PrecisionRecallDisplay, RocCurveDisplay, precision_recall_curve
 
+
+# Report
+
+def recall_at_precision(model, data: pd.DataFrame, target: pd.DataFrame | np.ndarray, precision: float) ->  float:
+    prec, recall, _ = precision_recall_curve(target, model.predict_proba(data)[:, 1])
+    idx = np.argmin(np.abs(prec - precision))
+    return recall[idx]
+
+def optimal_threshold(model, data: pd.DataFrame, target: pd.DataFrame | np.ndarray) ->  float:
+    precision, recall, threshold = precision_recall_curve(target, model.predict_proba(data)[:, 1])
+    best_idx = np.argmax(recall + precision)
+    return threshold[best_idx]
 
 # Model Selection Utilities
 
@@ -37,6 +49,22 @@ def evaluate_model(model, data: pd.DataFrame, target: pd.DataFrame | np.ndarray)
 
 model_selection_fig_dir = Path(__file__).resolve().parent.parent/"reports"/"model_selection"
 model_selection_fig_dir.mkdir(parents=True, exist_ok=True)
+
+def plot_roc_curve(model, data: pd.DataFrame, target: pd.DataFrame | np.ndarray, curve_label: str):
+    """
+    Fits `model` and returns a PrecisionRecallDisplay.
+    Uses response_method='auto' so it works for estimators with predict_proba OR decision_function.
+    """
+    fitted_model = model.fit(data, target)
+
+    return RocCurveDisplay.from_estimator(
+        estimator=fitted_model,
+        X=data, y=target,
+        pos_label=1, response_method='auto',
+        name=curve_label, plot_chance_level=True,
+        chance_level_kw={'label':'Chance Level'}
+    )
+
 
 def plot_pr_curve(model, data: pd.DataFrame, target: pd.DataFrame | np.ndarray, curve_label: str):
     """
