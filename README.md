@@ -69,12 +69,12 @@ In consumer lending, defaults are **rare** and the cost of mistakes is **asymmet
     │  │  ├─full-cv-pr-auc.png ✅
     │  │  ├─reduced-cv-f1-scores.png ✅
     │  │  ├─reduced-cv-pr-auc.png ✅
+    │  │  ├─selected_algorithm_roc_curve.png ✅
     │  │  └─selected_algorithm_pr_curve.png ✅
     │  ├─ pr_curves.png
     │  ├─ confusion_matrix.png
     │  └─ feature_importance.png
     ├─ models/
-    │  ├─
     │  └─ loanguard.pkl
     ├─ environment.yml ✅
     ├─ requirements.txt ✅
