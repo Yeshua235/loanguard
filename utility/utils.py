@@ -15,13 +15,39 @@ from sklearn.metrics import PrecisionRecallDisplay, RocCurveDisplay, precision_r
 
 
 # Report
+reports_fig_dir = Path(__file__).resolve().parent.parent/"reports"
+reports_fig_dir.mkdir(parents=True, exist_ok=True)
+
+models_dir = Path(__file__).resolve().parent.parent/"models"
+models_dir.mkdir(parents=True, exist_ok=True)
 
 def recall_at_precision(model, data: pd.DataFrame, target: pd.DataFrame | np.ndarray, precision: float) ->  float:
+    """_summary_
+
+    Args:
+        model (_type_): fitted model
+        data (pd.DataFrame): test/validation data matrix
+        target (pd.DataFrame | np.ndarray): target data
+        precision (float): precision at which recall is to be calculated
+
+    Returns:
+        float: recall value at the specified precision
+    """
     prec, recall, _ = precision_recall_curve(target, model.predict_proba(data)[:, 1])
     idx = np.argmin(np.abs(prec - precision))
     return recall[idx]
 
 def optimal_threshold(model, data: pd.DataFrame, target: pd.DataFrame | np.ndarray) ->  float:
+    """_summary_
+
+    Args:
+        model (_type_): fitted model
+        data (pd.DataFrame): test/validation data matrix
+        target (pd.DataFrame | np.ndarray):  target data
+
+    Returns:
+        float: threshold value that gives the highest pr-auc score
+    """
     precision, recall, threshold = precision_recall_curve(target, model.predict_proba(data)[:, 1])
     best_idx = np.argmax(recall + precision)
     return threshold[best_idx]

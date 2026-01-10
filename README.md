@@ -4,14 +4,13 @@
 > **Tagline**: Guarding lenders against risky loans with cost‑aware, class‑imbalance‑robust modeling.
 
 
-LoanGuard is a decision‑aware machine learning pipeline that predicts default probability and converts it into business‑aligned approvals using a cost matrix and threshold optimization. The project tackles severe class imbalance, reports PR‑AUC, recall@fixed precision, expected cost, and calibrated confusion matrices, and includes notebooks for EDA, feature engineering, training, and evaluation.
-
+LoanGuard is a decision‑aware machine learning pipeline that predicts default probability and converts it into business‑aligned approvals using threshold optimization. The project tackles severe class imbalance, reports PR‑AUC, recall@fixed precision, and calibrated confusion matrices, and includes notebooks for EDA, feature engineering, training, and evaluation.
 
 
 ## Overview
 
 **Goal**
-Predict the probability that a loan applicant will **default**, then convert probabilities into **decisions** using a **cost matrix** and **threshold optimization** that reflects business risk tolerance.
+Predict the probability that a loan applicant will **default**, then convert probabilities into **decisions** using **threshold optimization** that reflects business risk tolerance.
 
 **Why it matters**
 In consumer lending, defaults are **rare** and the cost of mistakes is **asymmetric**. A model that is merely “accurate” can be **unprofitable** if it ignores the cost of false negatives (missed risky loans). This project demonstrates **decision‑aware modeling** using robust pipelines, interpretable baselines, and **precision‑recall** driven evaluation.
@@ -23,12 +22,15 @@ In consumer lending, defaults are **rare** and the cost of mistakes is **asymmet
 **Source**
 
 *   **Kaggle** → *Home Credit Default Risk*
+
     Only **`application_train.csv`** is used (~158MB).
 
     Kaggle competition page: <https://www.kaggle.com/c/home-credit-default-risk>
 
 **Target**: `TARGET` (1 = default, 0 = non‑default)
-**Features**: Mixed numerical & categorical columns (demographics, employment, income, credit amounts, flags).
+
+**Features**: Mixed numerical & categorical columns (demographics, employment, income, credit amounts, flags etc.).
+
 **Imbalance**: Defaults ≈ **8%**, so accuracy alone is misleading.
 
 
@@ -36,49 +38,50 @@ In consumer lending, defaults are **rare** and the cost of mistakes is **asymmet
 ## Project Structure
 
     loanguard/
-    ├─ README.md ✅
-    ├─ LICENSE ✅
+    ├─ README.md
+    ├─ LICENSE
     ├─ data/
-    │  └─ application_train.csv ✅
+    │  └─ application_train.csv
     ├─ utility/
-    │  └─ utils.py ✅
+    │  └─ utils.py
     ├─ notebooks/
-    │  ├─ eda.ipynb ✅
-    │  ├─ feature_engineering.ipynb ✅
-    │  ├─ model_selection.ipynb ✅
+    │  ├─ eda.ipynb
+    │  ├─ feature_engineering.ipynb
+    │  ├─ model_selection.ipynb
     │  └─ loanguard.ipynb
     ├─ reports/
     │  ├─eda/
-    │  │  └─target_classes.dist.png ✅
+    │  │  └─target_classes.dist.png
     │  ├─feature_engineering/
-    │  │  ├─distance-preservation.png ✅
-    │  │  ├─Frobenius-vs-dimensionality.png ✅
-    │  │  ├─MSE-vs-dimensionality.png ✅
-    │  │  ├─pca-cumulative-explained-variance.png ✅
-    │  │  ├─R2-vs-dimensionality.png ✅
-    │  │  ├─reconstruction-error-r2.png ✅
-    │  │  └─Spectral-vs-dimensionality.png ✅
+    │  │  ├─distance-preservation.png
+    │  │  ├─Frobenius-vs-dimensionality.png
+    │  │  ├─MSE-vs-dimensionality.png
+    │  │  ├─pca-cumulative-explained-variance.png
+    │  │  ├─R2-vs-dimensionality.png
+    │  │  ├─reconstruction-error-r2.png
+    │  │  └─Spectral-vs-dimensionality.png
     │  ├─model_selection/
     │  │  ├─learning_curves/
-    │  │  │  ├─dummy_classifier.png ✅
-    │  │  │  ├─hist_gradient_boosting_classifier.png ✅
-    │  │  │  ├─logistic_regression.png ✅
-    │  │  │  ├─random_forest.png ✅
-    │  │  │  └─stochastic_gradient_descent.png ✅
-    │  │  ├─full-cv-f1-scores.png ✅
-    │  │  ├─full-cv-pr-auc.png ✅
-    │  │  ├─reduced-cv-f1-scores.png ✅
-    │  │  ├─reduced-cv-pr-auc.png ✅
-    │  │  ├─selected_algorithm_roc_curve.png ✅
-    │  │  └─selected_algorithm_pr_curve.png ✅
-    │  ├─ pr_curves.png
+    │  │  │  ├─dummy_classifier.png
+    │  │  │  ├─hist_gradient_boosting_classifier.png
+    │  │  │  ├─logistic_regression.png
+    │  │  │  ├─random_forest.png
+    │  │  │  └─stochastic_gradient_descent.png
+    │  │  ├─full-cv-f1-scores.png
+    │  │  ├─full-cv-pr-auc.png
+    │  │  ├─reduced-cv-f1-scores.png
+    │  │  ├─reduced-cv-pr-auc.png
+    │  │  ├─selected_algorithm_roc_curve.png
+    │  │  └─selected_algorithm_pr_curve.png
+    │  ├─ pr_curve.png
+    │  ├─ roc_curve.png
     │  ├─ confusion_matrix.png
-    │  └─ feature_importance.png
+    │  └─ confusion_matrix@optimal_threshold.png
     ├─ models/
     │  └─ loanguard.pkl
-    ├─ environment.yml ✅
-    ├─ requirements.txt ✅
-    └─ .gitignore ✅
+    ├─ environment.yml
+    ├─ requirements.txt
+    └─ .gitignore
 
 
 
@@ -90,10 +93,10 @@ In consumer lending, defaults are **rare** and the cost of mistakes is **asymmet
 
 ## Results
 
-- PR AUC: ---
-- Recall@Precision= --- : ---
-- Optimal threshold: ---
-- Expected cost per 1,000 applications: --- to ---
+- ROC AUC: 0.76
+- PR AUC: 0.24
+- Recall@Precision=0.60: 0.021
+- Optimal threshold: 0.063
 
 See `reports/` for exact figures and plots.
 
@@ -103,8 +106,7 @@ See `reports/` for exact figures and plots.
 
 *   **Precision‑Recall Curve**
 *   **PR AUC**
-*   **Recall\@Fixed Precision**
-*   **Expected Cost**
+*   **Recall@Fixed Precision**
 *   **Confusion Matrix at Optimal Threshold**
 
 
